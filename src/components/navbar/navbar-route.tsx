@@ -26,8 +26,8 @@ export const NavbarRoute = () => {
         <Link key={route.label} href={route.href}>
           <p
             className={cn(
-              "text-zinc-900 hover:text-blue-600 font-medium transition  ",
-              pathname === route.href && "text-blue-600  "
+              "text-zinc-900 dark:text-[#CBD5E1] hover:text-blue-600 dark:hover:text-blue-600  font-medium transition  ",
+              pathname === route.href && "text-blue-600  dark:text-blue-500 "
             )}
           >
             {route.label}

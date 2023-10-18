@@ -11,7 +11,7 @@ export default function MainLayout({
         <Navbar />
       </div>
 
-      {children}
+      <div className="mt-[80px]  p-4 max-w-[1520px] mx-auto ">{children}</div>
     </main>
   );
 }

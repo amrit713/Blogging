@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ModalProvider } from "@/components/provider/modal-provider";
+import { ThemeProvider } from "@/components/provider/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,9 +18,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ModalProvider />
-        {children}
+      <body className={font.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ModalProvider />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { ModeToggle } from "./navbar-toggle-theme";
 
 export const NavbarRight = () => {
   const { onOpen } = useModal();
@@ -30,6 +31,8 @@ export const NavbarRight = () => {
           Sign up{" "}
         </Button>
       </div>
+
+      <ModeToggle />
     </div>
   );
 };

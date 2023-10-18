@@ -8,7 +8,7 @@ import { NavbarRoute } from "./navbar-route";
 
 export const Navbar = () => {
   return (
-    <div className=" h-full border-b  bg-white shadow-sm">
+    <div className=" h-full border-b  bg-white  dark:bg-[#020917] shadow-sm">
       <div className=" h-full p-4 max-w-[1520px] mx-auto  flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <MobileNavbar />

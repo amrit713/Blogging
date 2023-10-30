@@ -3,6 +3,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { BrandIcon } from "../Icon";
 import { useModal } from "@/hooks/use-modal-store";
 
@@ -55,6 +55,7 @@ const formSchema = z.object({
 
 export const SignupModal = () => {
   const { isOpen, onOpen, onClose, type } = useModal();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,9 +70,17 @@ export const SignupModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    onClose();
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await axios.post("/api/auth/signup", values);
+
+      form.reset();
+      router.refresh();
+      onClose();
+      onOpen("login");
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
   };
   return (
     <Dialog open={modalOpen} onOpenChange={onClose}>

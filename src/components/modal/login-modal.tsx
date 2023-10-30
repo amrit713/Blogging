@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,8 @@ const formSchema = z.object({
 
 export const LoginModal = () => {
   const { isOpen, onOpen, onClose, type } = useModal();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,9 +59,20 @@ export const LoginModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    onClose();
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const signInData = await signIn("credentials", {
+      ...values,
+      redirect: false,
+    });
+
+    if (signInData?.error) {
+      console.log(signInData.error);
+    } else {
+      form.reset();
+
+      router.refresh();
+      onClose();
+    }
   };
   return (
     <Dialog open={modalOpen} onOpenChange={onClose}>
@@ -134,7 +148,7 @@ export const LoginModal = () => {
           <Button
             variant="outline"
             className="w-full"
-            // onClick={() => signIn("google")}
+            onClick={() => signIn("google")}
           >
             Login With Google
           </Button>

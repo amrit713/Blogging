@@ -26,7 +26,10 @@ export const NavbarRight = ({ currentUser }: NavbarRightProps) => {
         <Search className=" h-6 w-6" />
       </Button>
       {currentUser ? (
-        <NavbarUserDropdown currentUser={currentUser} />
+        <div className="flex gap-x-4 items-center">
+          <Button className="rounded-[20px]">Write</Button>
+          <NavbarUserDropdown currentUser={currentUser} />
+        </div>
       ) : (
         <div className="flex gap-x-4 items-center">
           <Button

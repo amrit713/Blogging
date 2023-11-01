@@ -102,7 +102,7 @@ export const LoginModal = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="border-zinc-00 border-2 focus-visible:border-primary  focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                          className="border-zinc-100 border-2 focus-visible:border-primary  focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                           placeholder=" Enter your email"
                           {...field}
                         />

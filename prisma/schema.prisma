@@ -19,9 +19,9 @@ model User {
   password      String?   @db.Text
   image         String?   @db.Text
 
-  Blog    Blog[]
-  Account Account[]
-  Comment Comment[]
+  blogs    Blog[]
+  accounts Account[]
+  comments Comment[]
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
@@ -49,9 +49,11 @@ model Account {
 model Blog {
   id          String  @id @default(uuid())
   title       String  @db.Text
-  description String? @db.Text
+  description String  @db.Text
+  content     String? @db.Text
   imageUrl    String? @db.Text
   like        Int?
+  isComment   Boolean @default(true)
 
   isPublished Boolean @default(false)
 
@@ -60,7 +62,7 @@ model Blog {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  Comment Comment[]
+  comments Comment[]
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt

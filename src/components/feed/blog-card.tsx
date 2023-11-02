@@ -6,12 +6,16 @@ import { UserInfo } from "./user-info";
 import { MessagesSquare } from "lucide-react";
 import { Tag } from "@/components/tag";
 import SaveForLater from "../save-for-later";
+import { Blog } from "@prisma/client";
 
-export const BlogCard = () => {
+interface BlogCardProps {
+  blog: Blog;
+}
+export const BlogCard = ({ blog }: BlogCardProps) => {
   return (
     <div className="max-w-[720px] mx-auto p-6 border  rounded-md my-8 flex flex-col gap-6 ">
       <UserInfo />
-      <BlogContent />
+      <BlogContent blog={blog} />
       <div className=" flex items-center justify-between">
         <div className="flex items-center">
           <Button variant="ghost" className="text-zinc-600">

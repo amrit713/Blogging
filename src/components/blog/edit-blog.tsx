@@ -22,6 +22,11 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Blog } from "@prisma/client";
+
+interface EditBlogProps {
+  blog: Blog;
+}
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -32,17 +37,17 @@ const formSchema = z.object({
   isPublished: z.boolean(),
 });
 
-export const CreateBlog = () => {
+export const EditBlog = ({ blog }: EditBlogProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      content: "",
-      imageUrl: "",
-      isComment: true,
-      isPublished: false,
+      title: blog.title,
+      description: blog.description,
+      content: blog.content ? blog.content : "",
+      imageUrl: blog.imageUrl ? blog.imageUrl : "",
+      isComment: blog.isComment ? true : blog.isComment,
+      isPublished: blog.isPublished ? blog.isPublished : false,
     },
   });
 
@@ -50,8 +55,8 @@ export const CreateBlog = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/blogs", values);
-      form.reset();
+      const res = await axios.patch(`/api/blogs/${blog.id}`, values);
+      console.log(res);
       router.refresh();
     } catch (error) {
       console.log("Post Error", error);
@@ -193,7 +198,7 @@ export const CreateBlog = () => {
             className="font-semibold"
             disabled={isLoading}
           >
-            Create post
+            Edit post
             {isLoading && <Loader className="w-4 h-4 ml-2 animate-spin" />}
           </Button>
         </div>

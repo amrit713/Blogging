@@ -7,12 +7,14 @@ import { useModal } from "@/hooks/use-modal-store";
 import { ModeToggle } from "./navbar-toggle-theme";
 import { SafeUser } from "@/types";
 import { NavbarUserDropdown } from "./navbar-user-dropdown";
+import { useRouter } from "next/navigation";
 
 interface NavbarRightProps {
   currentUser?: SafeUser | null;
 }
 
 export const NavbarRight = ({ currentUser }: NavbarRightProps) => {
+  const router = useRouter();
   const { onOpen } = useModal();
 
   return (
@@ -27,7 +29,12 @@ export const NavbarRight = ({ currentUser }: NavbarRightProps) => {
       </Button>
       {currentUser ? (
         <div className="flex gap-x-4 items-center">
-          <Button className="rounded-[20px]">Write</Button>
+          <Button
+            className="rounded-[20px]"
+            onClick={() => router.push("/create")}
+          >
+            Write
+          </Button>
           <NavbarUserDropdown currentUser={currentUser} />
         </div>
       ) : (
